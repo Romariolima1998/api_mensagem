@@ -3,6 +3,8 @@
 
 
 ### como rodar
+``` git clone https://github.com/Romariolima1998/api_mensagem.git ```
+
 adicione o email e a senha de app no applicatin.yml.
 
 rode o comando abaixo no terminal na pasta comunicacao_api
