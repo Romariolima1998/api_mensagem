@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-11-03T14:05:00-0300",
+    date = "2025-11-19T16:11:53-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 11.0.29 (Amazon.com Inc.)"
 )
 @Component
@@ -47,6 +47,7 @@ public class ComunicacaoConverterMapperImpl implements ComunicacaoConverterMappe
         comunicacaoOutDTO.dataHoraEnvio( entity.getDataHoraEnvio() );
         comunicacaoOutDTO.nomeDestinatario( entity.getNomeDestinatario() );
         comunicacaoOutDTO.emailDestinatario( entity.getEmailDestinatario() );
+        comunicacaoOutDTO.emailOwner( entity.getEmailOwner() );
         comunicacaoOutDTO.telefoneDestinatario( entity.getTelefoneDestinatario() );
         comunicacaoOutDTO.mensagem( entity.getMensagem() );
         comunicacaoOutDTO.modoDeEnvio( entity.getModoDeEnvio() );

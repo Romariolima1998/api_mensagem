@@ -22,6 +22,7 @@ public class ComunicacaoOutDTO implements Serializable {
     private LocalDateTime dataHoraEnvio;
     private String nomeDestinatario;
     private String emailDestinatario;
+    private String emailOwner;
     private String telefoneDestinatario;
     private String mensagem;
     private ModoEnvioEnum modoDeEnvio;

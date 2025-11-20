@@ -22,5 +22,7 @@ public interface ComunicacaoRepository extends CrudRepository<ComunicacaoEntity,
     List<ComunicacaoEntity> findByDataHoraEnvioBetweenAndStatusEnvio(
             LocalDateTime dataInicial, LocalDateTime dataFinal, StatusEnvioEnum statusEnvio
     );
+
+    List<ComunicacaoEntity> findAllByEmailOwner(String email);
 }
 

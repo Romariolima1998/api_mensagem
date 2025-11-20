@@ -7,7 +7,6 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -31,6 +30,9 @@ public class ComunicacaoEntity implements Serializable {
 
     @Column(name = "EMAIL_DESTINATARIO", nullable = false)
     private String emailDestinatario;
+
+    @Column(name="EMAIL_OWNER")
+    private String emailOwner;
 
     @Column(name = "TELEFONE_DESTINATARIO")
     private String telefoneDestinatario;
