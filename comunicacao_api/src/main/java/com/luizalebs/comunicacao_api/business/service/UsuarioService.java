@@ -19,6 +19,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UsuarioService {
@@ -64,15 +66,18 @@ public class UsuarioService {
         return usuarioRepository.existsByEmail(email);
     }
 
-    public UsuarioDTO buscaUsuarioPorEmail(String email) {
-        Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow(
-                () -> new ResourceNotFoundException("email nao encontrado " + email));
 
-        return usuarioConverter.paraUsuarioDTO(usuario);
+    public List<UsuarioDTO> buscaUsuarios() {
+        List<Usuario> usuario = (List<Usuario>) usuarioRepository.findAll();
+
+
+
+        return usuarioConverter.paraListaEnderecoDTO(usuario);
     }
 
-    public void deletaUsuarioPorEmail(String email) {
-        usuarioRepository.deleteByEmail(email);
+    public void deletaUsuarioPorId(Long id) {
+
+        usuarioRepository.deleteById(id);
     }
 
     public UsuarioDTO atualizaDadosUsuario(String token, UsuarioDTO dto){

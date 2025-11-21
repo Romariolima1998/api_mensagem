@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("usuario")
 @RequiredArgsConstructor
@@ -33,13 +35,13 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public ResponseEntity<UsuarioDTO> buscaUsuarioPorEmail(@RequestParam("email" ) String email){
-        return ResponseEntity.ok(usuarioService.buscaUsuarioPorEmail(email));
+    public ResponseEntity<List<UsuarioDTO>> buscaUsuarios(){
+        return ResponseEntity.ok(usuarioService.buscaUsuarios());
     }
 
-    @DeleteMapping("/{email}")
-    public ResponseEntity<Void> deletaUsuarioPorEmail(@PathVariable String email){
-        usuarioService.deletaUsuarioPorEmail(email);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletaUsuarioPorId(@PathVariable Long id){
+        usuarioService.deletaUsuarioPorId(id);
         return ResponseEntity.ok().build();
     }
 

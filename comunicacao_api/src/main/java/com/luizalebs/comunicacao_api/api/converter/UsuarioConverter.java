@@ -5,6 +5,9 @@ import com.luizalebs.comunicacao_api.api.dto.UsuarioDTO;
 import com.luizalebs.comunicacao_api.infraestructure.entities.Usuario;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class UsuarioConverter {
 
@@ -19,10 +22,26 @@ public class UsuarioConverter {
 
     public UsuarioDTO paraUsuarioDTO(Usuario usuarioDTO){
         return UsuarioDTO.builder()
+                .id(usuarioDTO.getId())
                 .nome(usuarioDTO.getNome())
                 .email(usuarioDTO.getEmail())
                 .senha(usuarioDTO.getSenha())
                 .build();
+    }
+
+    public List<UsuarioDTO> paraListaEnderecoDTO(List<Usuario> usuarioList){
+        List<UsuarioDTO> listUsuarioTDO = new ArrayList<>();
+
+        for(Usuario usuario: usuarioList){
+            UsuarioDTO tdo = new UsuarioDTO();
+                    tdo.setId(usuario.getId());
+                    tdo.setNome(usuario.getNome());
+                    tdo.setEmail(usuario.getEmail());
+                    tdo.setSenha(usuario.getSenha());
+
+                    listUsuarioTDO.add(tdo);
+        }
+        return listUsuarioTDO;
     }
 
     public Usuario updateUsuario(UsuarioDTO usuarioDTO, Usuario entity){
@@ -33,5 +52,7 @@ public class UsuarioConverter {
                 .email(usuarioDTO.getEmail() != null ? usuarioDTO.getEmail() : entity.getEmail())
                 .build();
     }
+
+
 
 }

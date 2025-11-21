@@ -50,6 +50,7 @@ public class SecurityConfig {
                 .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 .antMatchers(HttpMethod.POST, "/usuario/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/usuario").permitAll()
+                .antMatchers(HttpMethod.GET, "/usuario").permitAll()
                 .antMatchers(HttpMethod.GET, "/comunicacao/status").permitAll()
                 .antMatchers("/usuario/**").authenticated()
                 .anyRequest().authenticated() // Requer autenticação para todas as outras requisições
