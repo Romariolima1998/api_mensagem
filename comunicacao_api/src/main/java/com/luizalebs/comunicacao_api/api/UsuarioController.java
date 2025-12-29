@@ -22,8 +22,8 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<UsuarioDTO> salvaUsuario(@RequestBody UsuarioDTO usuarioDTO){
-        return ResponseEntity.ok(
-                usuarioService.salvaUsuario(usuarioDTO)
+        return ResponseEntity.status(201)
+                .body(usuarioService.salvaUsuario(usuarioDTO)
         );
     }
 
@@ -39,9 +39,9 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.buscaUsuarios());
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletaUsuarioPorId(@PathVariable Long id){
-        usuarioService.deletaUsuarioPorId(id);
+    @DeleteMapping
+    public ResponseEntity<Void> deletaUsuarioPorToken(@RequestHeader(name = "Authorization", required = false) String token){
+        usuarioService.deletaUsuarioPorToken(token);
         return ResponseEntity.ok().build();
     }
 

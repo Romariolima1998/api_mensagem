@@ -3,6 +3,7 @@ package com.luizalebs.comunicacao_api.business.service;
 
 import com.luizalebs.comunicacao_api.api.converter.UsuarioConverter;
 import com.luizalebs.comunicacao_api.api.dto.UsuarioDTO;
+import com.luizalebs.comunicacao_api.business.exceptions.BadRequestException;
 import com.luizalebs.comunicacao_api.business.exceptions.ConflictException;
 import com.luizalebs.comunicacao_api.business.exceptions.ResourceNotFoundException;
 import com.luizalebs.comunicacao_api.business.exceptions.UnaltorizedException;
@@ -52,13 +53,13 @@ public class UsuarioService {
     }
 
     public void emailExiste(String email) {
-        try {
+        if(email != null) {
             boolean existe = verificaEmailExistente(email);
             if (existe) {
                 throw new ConflictException("email ja cadastrado");
             }
-        } catch (ConflictException e) {
-            throw new ConflictException("email ja cadastrado ", e.getCause());
+        } else {
+            throw new BadRequestException("email obrigatorio");
         }
     }
 
@@ -69,22 +70,26 @@ public class UsuarioService {
 
     public List<UsuarioDTO> buscaUsuarios() {
         List<Usuario> usuario = (List<Usuario>) usuarioRepository.findAll();
-
-
-
         return usuarioConverter.paraListaEnderecoDTO(usuario);
     }
 
-    public void deletaUsuarioPorId(Long id) {
+    public void deletaUsuarioPorToken(String token) {
+        String email = jwtUtil.extractUsernameToken(token.substring(7));
+        Usuario usuarioEntity = usuarioRepository.findByEmail(email).orElseThrow(
+                ()-> new ResourceNotFoundException("usuario nao existe mais")
+        );
 
-        usuarioRepository.deleteById(id);
+        usuarioRepository.delete(usuarioEntity);
     }
 
     public UsuarioDTO atualizaDadosUsuario(String token, UsuarioDTO dto){
         String email = jwtUtil.extractUsernameToken(token.substring(7));
 
         Usuario usuarioEntity = usuarioRepository.findByEmail(email).orElseThrow(
-                () -> new ResourceNotFoundException("email nao localizado") );
+                () -> new ResourceNotFoundException("usuario nao existe mais"));
+        if (dto.getEmail() != null) {
+            emailExiste(dto.getEmail());
+        }
         Usuario usuario = usuarioConverter.updateUsuario(dto, usuarioEntity);
         if(dto.getSenha() != null){
             usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));

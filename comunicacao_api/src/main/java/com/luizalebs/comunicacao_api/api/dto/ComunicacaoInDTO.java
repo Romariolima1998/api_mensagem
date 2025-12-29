@@ -8,7 +8,6 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -16,7 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @ToString
-public class    ComunicacaoInDTO implements Serializable {
+public class  ComunicacaoInDTO implements Serializable {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime dataHoraEnvio;

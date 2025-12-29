@@ -15,10 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +30,7 @@ public class ComunicacaoService {
     public ComunicacaoOutDTO agendarComunicacao(ComunicacaoInDTO dto, String token) {
         if (dto.getDataHoraEnvio() == null || dto.getNomeDestinatario() == null ||
                 dto.getEmailDestinatario() == null || dto.getMensagem() == null) {
-            throw new BadRequestException("json invalido ou faltando campos ");
+            throw new BadRequestException("json invalido, faltando campos");
         }
 
         String email = jwtUtil.extractUsernameToken(token.substring(7));
@@ -46,18 +43,15 @@ public class ComunicacaoService {
 
     public List<ComunicacaoOutDTO> buscaMessagesAutor(String token){
         String emailOwner = jwtUtil.extractUsernameToken(token.substring(7));
-
         List<ComunicacaoEntity> entity = repository.findAllByEmailOwner(emailOwner);
         return converter.paraListDTO(entity);
     }
 
     public List<ComunicacaoOutDTO> buscarStatusComunicacao(String emailDestinatario) {
         List<ComunicacaoEntity> entity = repository.findAllByEmailDestinatario(emailDestinatario);
-
         if(entity.isEmpty()){
             throw new NotFaundException("nenhum dados encontrado para este email : " + emailDestinatario);
         }
-
         return converter.paraListDTO(entity);
     }
 
@@ -66,11 +60,9 @@ public class ComunicacaoService {
         ComunicacaoEntity entity = repository.findById(id).orElseThrow(
                 () ->   new NotFaundException("nenhum dados encontrado para este id : " + id)
         );
-
         if(!emailOwner.equals(entity.getEmailOwner())){
             throw new ForbiddenException("essa mensagem nao pertence a voce, acesso negado");
         }
-
         entity.setStatusEnvio(StatusEnvioEnum.CANCELADO);
         repository.save(entity);
         return (converter.paraDTO(entity));
